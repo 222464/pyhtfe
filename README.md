@@ -55,7 +55,7 @@ freely, subject to the following restrictions:
 
 ------------------------------------------------------------------------------
 
-ContinuousHTMGPU uses the following external libraries:
+pyHTFE uses the following external libraries:
 
 OpenCL
 
