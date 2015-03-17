@@ -1,4 +1,4 @@
-# ![pyHTFE Logo](http://i1218.photobucket.com/albums/dd401/222464/PYHTFELOGO.png)
+# ![pyHTFE Logo](http://i1218.photobucket.com/albums/dd401/222464/PYHTFELOGOSMALL.png)
 
 pyHTFE
 =======
