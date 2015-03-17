@@ -32,9 +32,9 @@ This particular autoencoder, as with many autoencoders, can be thought of as a b
 
 These individual autoencoders are then stacked, but are also given additional feed-back connections from higher layers. This allows information to flow both up and down: Representations are features are formed when going up, and predictions are made going down. This has the benefit the features at the highest levels do not need to be very descriptive, since the information is always available in more detail in the layers below it.
 
-HTFE has a feature known as temporal pooling: It can group previous events into conceptual "bins", as a by-produce of the way the spatial pooling interacts with the hidden to hidden recurrent connections. The temporal pooling also allows the system to function very similarly to an echo state network, where the reservoir optimizes itself (since the SDRs change rather slowly).
+HTFE has a feature known as temporal pooling: It can group previous events into conceptual "bins", as a by-product of the way the spatial pooling interacts with the hidden to hidden recurrent connections. The temporal pooling also allows the system to function very similarly to an echo state network, where the reservoir optimizes itself (since the SDRs change rather slowly).
 
-All together this leads to an extremely scalable system. Below is a rendering of a 5 layer HTFE with over 400000 hidden nodes.
+All together this leads to an extremely scalable system. Below is a rendering of a 5 layer HTFE with over 400000 hidden nodes, running at 60 frames per second on a AMD r290.
 
 # ![HTFE hierarchy](http://i1218.photobucket.com/albums/dd401/222464/HTFERLSIZE.png)
 
