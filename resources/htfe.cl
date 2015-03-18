@@ -195,7 +195,7 @@ void kernel layerHiddenInhibit(read_only image2d_t hiddenActivations, read_only 
 	
 	float prevDutyCycleAndTrace = read_imagef(hiddenStatesPrev, hiddenPosition).y;
 	
-	float newState = numHigher < localActivity ? thisActivation : 0.0f;
+	float newState = numHigher < localActivity ? 1.0f : 0.0f;
 	
 	float newDutyCycle = (1.0f - dutyCycleDecay) * prevDutyCycleAndTrace + dutyCycleDecay * newState;
 	
@@ -247,7 +247,7 @@ void kernel layerHiddenWeightUpdate(read_only image2d_t visibleReconstruction, r
 
 	float2 nextCenterPosition = (float2)(inputCenterPositionNormalized.x * nextSizeMinusOne.x, inputCenterPositionNormalized.y * nextSizeMinusOne.y);
 
-	float thisHiddenState = read_imagef(hiddenStatesPrev, hiddenPosition).x;
+	float2 thisHiddenState = read_imagef(hiddenStatesPrev, hiddenPosition).xy;
 	float thisActivation = read_imagef(feedBackActivationsPrev, hiddenPosition).x;
 
 	// --------------------------------- Collect Error -------------------------------------
@@ -282,7 +282,7 @@ void kernel layerHiddenWeightUpdate(read_only image2d_t visibleReconstruction, r
 		}
 	}
 	
-	float error = thisHiddenState * (1.0f - thisHiddenState) * sum;
+	float error = thisHiddenState.x * thisActivation * (1.0f - thisActivation) * sum;
 	
 	// --------------------------------- Update on Error ---------------------------------
 	
@@ -353,12 +353,12 @@ void kernel layerHiddenWeightUpdate(read_only image2d_t visibleReconstruction, r
 	
 	float prevBias = read_imagef(hiddenBiasesPrev, hiddenPosition).x;
 		
-	float newBias = prevBias + alpha.w * eligibility;// + (sparsity - thisHiddenState.y) * gamma;
+	float newBias = prevBias + alpha.w * eligibility;
 	
 	write_imagef(hiddenBiases, hiddenPosition, (float4)(newBias, 0.0f, 0.0f, 0.0f));
 }
 
-void kernel layerHiddenWeightUpdateLast(read_only image2d_t visibleReconstruction, read_only image2d_t inputs, read_only image2d_t inputsPrev, read_only image2d_t feedBackActivationsPrev, read_only image2d_t hiddenStatesPrev, read_only image2d_t hiddenStatesPrevPrev,
+void kernel layerHiddenWeightUpdateLast(read_only image2d_t visibleReconstruction, read_only image2d_t inputs, read_only image2d_t inputsPrev, read_only image2d_t feedBackActivationsPrev, read_only image2d_t hiddenStatesPrev, 	 read_only image2d_t hiddenStatesPrevPrev,
 	read_only image3d_t reconstructionWeightsPrev, read_only image3d_t feedForwardWeightsPrev, read_only image3d_t lateralWeightsPrev, read_only image2d_t hiddenBiasesPrev,
 	write_only image3d_t feedForwardWeights, write_only image3d_t lateralWeights, write_only image2d_t hiddenBiases,
 	int2 layerSize, int2 layerSizeMinusOne, float2 layerSizeMinusOneInv, int2 inputSize, int2 inputSizeMinusOne, float2 inputSizeMinusOneInv, int receptiveFieldRadius, int lateralConnectionRadius, int reconstructionReceptiveRadius, float sparsity, float4 alpha, float gamma) 
@@ -368,7 +368,7 @@ void kernel layerHiddenWeightUpdateLast(read_only image2d_t visibleReconstructio
 	float2 inputCenterPositionNormalized = (float2)(hiddenPosition.x * layerSizeMinusOneInv.x, hiddenPosition.y * layerSizeMinusOneInv.y);
 	float2 inputCenterPosition = (float2)(inputCenterPositionNormalized.x * inputSizeMinusOne.x, inputCenterPositionNormalized.y * inputSizeMinusOne.y);
 
-	float thisHiddenState = read_imagef(hiddenStatesPrev, hiddenPosition).x;
+	float2 thisHiddenState = read_imagef(hiddenStatesPrev, hiddenPosition).xy;
 	float thisActivation = read_imagef(feedBackActivationsPrev, hiddenPosition).x;
 
 	// --------------------------------- Collect Error -------------------------------------
@@ -403,7 +403,7 @@ void kernel layerHiddenWeightUpdateLast(read_only image2d_t visibleReconstructio
 		}
 	}
 	
-	float error = thisHiddenState * (1.0f - thisHiddenState) * sum;
+	float error = thisHiddenState.x * thisActivation * (1.0f - thisActivation) * sum;
 	
 	// --------------------------------- Update on Error ---------------------------------
 	
@@ -453,7 +453,7 @@ void kernel layerHiddenWeightUpdateLast(read_only image2d_t visibleReconstructio
 	
 	float prevBias = read_imagef(hiddenBiasesPrev, hiddenPosition).x;
 		
-	float newBias = prevBias + alpha.w * eligibility;// + (sparsity - thisHiddenState.y) * gamma;
+	float newBias = prevBias + alpha.w * eligibility;
 	
 	write_imagef(hiddenBiases, hiddenPosition, (float4)(newBias, 0.0f, 0.0f, 0.0f));
 }
