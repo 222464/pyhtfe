@@ -649,7 +649,7 @@ void HTFE::learn(sys::ComputeSystem &cs) {
 
 		cs.getQueue().enqueueNDRangeKernel(_layerVisibleWeightUpdateKernel, cl::NullRange, cl::NDRange(prevWidth, prevHeight));
 
-		pPrevLayer = &_layers[l]._hiddenStatesFeedBack; // Or _hiddenStatesFeedBack ?
+		pPrevLayer = &_layers[l]._hiddenStatesFeedForward; // Or _hiddenStatesFeedBack ?
 		prevWidth = _layerDescs[l]._width;
 		prevHeight = _layerDescs[l]._height;
 
