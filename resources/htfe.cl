@@ -200,13 +200,11 @@ void kernel layerHiddenInhibit(read_only image2d_t hiddenActivations, read_only 
 		}
 	}
 	
-	float prevDutyCycleAndTrace = read_imagef(hiddenStatesPrev, hiddenPosition).y;
+	float newState = numHigher < localActivity ? thisActivation : 0.0f;
 	
-	float newState = numHigher < localActivity ? 1.0f : 0.0f;
+	float newDeriv = numHigher < localActivity ? thisActivation * (1.0f - thisActivation) : 0.0f;
 	
-	float newDutyCycle = (1.0f - dutyCycleDecay) * prevDutyCycleAndTrace + dutyCycleDecay * newState;
-	
-	write_imagef(hiddenStates, hiddenPosition, (float4)(newState, newDutyCycle, 0.0f, 0.0f));
+	write_imagef(hiddenStates, hiddenPosition, (float4)(newState, newDeriv, 0.0f, 0.0f));
 }
 
 void kernel layerVisibleReconstruct(read_only image2d_t hiddenStates, read_only image3d_t reconstructionWeights, read_only image2d_t visibleBiases, write_only image2d_t visibleReconstruction,
@@ -289,7 +287,7 @@ void kernel layerHiddenWeightUpdate(read_only image2d_t visibleReconstruction, r
 		}
 	}
 	
-	float error = thisHiddenState.x * thisActivation * (1.0f - thisActivation) * sum;
+	float error = thisHiddenState.y * sum;
 	
 	// --------------------------------- Update on Error ---------------------------------
 	
@@ -410,7 +408,7 @@ void kernel layerHiddenWeightUpdateLast(read_only image2d_t visibleReconstructio
 		}
 	}
 	
-	float error = thisHiddenState.x * thisActivation * (1.0f - thisActivation) * sum;
+	float error = thisHiddenState.y * sum;
 	
 	// --------------------------------- Update on Error ---------------------------------
 	
