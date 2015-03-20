@@ -43,7 +43,8 @@ void kernel initializeLayerHidden(write_only image2d_t hiddenFeedForwardActivati
 	write_only image3d_t feedForwardWeights,
 	write_only image2d_t hiddenBiases,
 	write_only image3d_t lateralWeights,
-	int feedForwardSize, int lateralSize,
+	write_only image3d_t feedBackWeights,
+	int feedForwardSize, int lateralSize, int feedBackSize,
 	uint2 seed, float sparsity, float minWeight, float maxWeight)
 {
 	uint2 seedValue = seed + (uint2)(get_global_id(0) * 29 - 12, get_global_id(1) * 16 + 23) * 36;
@@ -73,6 +74,14 @@ void kernel initializeLayerHidden(write_only image2d_t hiddenFeedForwardActivati
 		float lateralWeight = randFloat(&seedValue) * (maxWeight - minWeight) + minWeight;
 
 		write_imagef(lateralWeights, weightPosition, (float4)(lateralWeight, 0.0f, 0.0f, 0.0f));
+	}
+	
+	for (int wi = 0; wi < feedBackSize; wi++) {
+		int4 weightPosition = (int4)(hiddenPosition.x, hiddenPosition.y, wi, 0);
+	
+		float feedBackWeight = randFloat(&seedValue) * (maxWeight - minWeight) + minWeight;
+
+		write_imagef(feedBackWeights, weightPosition, (float4)(feedBackWeight, 0.0f, 0.0f, 0.0f));
 	}
 }
 

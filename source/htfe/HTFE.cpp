@@ -100,8 +100,10 @@ void HTFE::createRandom(sys::ComputeSystem &cs, sys::ComputeProgram &program, in
 		initializeLayerHiddenKernel.setArg(index++, _layers[l]._feedForwardWeights);
 		initializeLayerHiddenKernel.setArg(index++, _layers[l]._hiddenBiases);
 		initializeLayerHiddenKernel.setArg(index++, _layers[l]._lateralWeights);
+		initializeLayerHiddenKernel.setArg(index++, _layers[l]._feedBackWeights);
 		initializeLayerHiddenKernel.setArg(index++, numFeedForwardWeights);
 		initializeLayerHiddenKernel.setArg(index++, numLateralWeights);
+		initializeLayerHiddenKernel.setArg(index++, numFeedBackWeights);
 		initializeLayerHiddenKernel.setArg(index++, initSeedHidden);
 		initializeLayerHiddenKernel.setArg(index++, _layerDescs[l]._sparsity);
 		initializeLayerHiddenKernel.setArg(index++, minInitWeight);
