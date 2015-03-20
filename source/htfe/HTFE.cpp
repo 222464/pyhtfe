@@ -117,6 +117,8 @@ void HTFE::createRandom(sys::ComputeSystem &cs, sys::ComputeProgram &program, in
 
 		initializeLayerVisibleKernel.setArg(index++, _layers[l]._visibleBiases);
 		initializeLayerVisibleKernel.setArg(index++, _layers[l]._visibleReconstruction);
+		initializeLayerVisibleKernel.setArg(index++, _layers[l]._reconstructionWeights);
+		initializeLayerVisibleKernel.setArg(index++, numReconstructionWeights);
 		initializeLayerVisibleKernel.setArg(index++, initSeedVisible);
 		initializeLayerVisibleKernel.setArg(index++, minInitWeight);
 		initializeLayerVisibleKernel.setArg(index++, maxInitWeight);

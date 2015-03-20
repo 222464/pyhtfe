@@ -76,8 +76,8 @@ void kernel initializeLayerHidden(write_only image2d_t hiddenFeedForwardActivati
 	}
 }
 
-void kernel initializeLayerVisible(write_only image2d_t visibleBiases, write_only image2d_t visibleReconstruction,
-	uint2 seed, float minWeight, float maxWeight)
+void kernel initializeLayerVisible(write_only image2d_t visibleBiases, write_only image2d_t visibleReconstruction, write_only image3d_t reconstructionWeights,
+	int reconstructionSize, uint2 seed, float minWeight, float maxWeight)
 {
 	uint2 seedValue = seed + (uint2)(get_global_id(0) * 29 - 12, get_global_id(1) * 16 + 23) * 36;
 
@@ -86,6 +86,13 @@ void kernel initializeLayerVisible(write_only image2d_t visibleBiases, write_onl
 	float bias = randFloat(&seedValue) * (maxWeight - minWeight) + minWeight;
 
 	write_imagef(visibleBiases, visiblePosition, (float4)(bias, 0.0f, 0.0f, 0.0f));
+	
+	for (int wi = 0; wi < reconstructionSize; wi++) {
+		float weight = randFloat(&seedValue) * (maxWeight - minWeight) + minWeight;
+		
+		write_imagef(reconstructionWeights, (int4)(visiblePosition.x, visiblePosition.y, wi, 0), (float4)(weight, 0.0f, 0.0f, 0.0f));
+	}
+	
 	write_imagef(visibleReconstruction, visiblePosition, (float4)(0.0f, 0.0f, 0.0f, 0.0f));
 }
 
