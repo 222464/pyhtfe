@@ -190,12 +190,18 @@ class LayerDesc(_object):
     __swig_setmethods__["_hiddenBiasAlpha"] = _htfe.LayerDesc__hiddenBiasAlpha_set
     __swig_getmethods__["_hiddenBiasAlpha"] = _htfe.LayerDesc__hiddenBiasAlpha_get
     if _newclass:_hiddenBiasAlpha = _swig_property(_htfe.LayerDesc__hiddenBiasAlpha_get, _htfe.LayerDesc__hiddenBiasAlpha_set)
+    __swig_setmethods__["_reconstructionAlpha"] = _htfe.LayerDesc__reconstructionAlpha_set
+    __swig_getmethods__["_reconstructionAlpha"] = _htfe.LayerDesc__reconstructionAlpha_get
+    if _newclass:_reconstructionAlpha = _swig_property(_htfe.LayerDesc__reconstructionAlpha_get, _htfe.LayerDesc__reconstructionAlpha_set)
     __swig_setmethods__["_gamma"] = _htfe.LayerDesc__gamma_set
     __swig_getmethods__["_gamma"] = _htfe.LayerDesc__gamma_get
     if _newclass:_gamma = _swig_property(_htfe.LayerDesc__gamma_get, _htfe.LayerDesc__gamma_set)
     __swig_setmethods__["_lateralScalar"] = _htfe.LayerDesc__lateralScalar_set
     __swig_getmethods__["_lateralScalar"] = _htfe.LayerDesc__lateralScalar_get
     if _newclass:_lateralScalar = _swig_property(_htfe.LayerDesc__lateralScalar_get, _htfe.LayerDesc__lateralScalar_set)
+    __swig_setmethods__["_minDerivative"] = _htfe.LayerDesc__minDerivative_set
+    __swig_getmethods__["_minDerivative"] = _htfe.LayerDesc__minDerivative_get
+    if _newclass:_minDerivative = _swig_property(_htfe.LayerDesc__minDerivative_get, _htfe.LayerDesc__minDerivative_set)
     def __init__(self): 
         this = _htfe.new_LayerDesc()
         try: self.this.append(this)
