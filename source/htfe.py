@@ -193,15 +193,36 @@ class LayerDesc(_object):
     __swig_setmethods__["_reconstructionAlpha"] = _htfe.LayerDesc__reconstructionAlpha_set
     __swig_getmethods__["_reconstructionAlpha"] = _htfe.LayerDesc__reconstructionAlpha_get
     if _newclass:_reconstructionAlpha = _swig_property(_htfe.LayerDesc__reconstructionAlpha_get, _htfe.LayerDesc__reconstructionAlpha_set)
-    __swig_setmethods__["_gamma"] = _htfe.LayerDesc__gamma_set
-    __swig_getmethods__["_gamma"] = _htfe.LayerDesc__gamma_get
-    if _newclass:_gamma = _swig_property(_htfe.LayerDesc__gamma_get, _htfe.LayerDesc__gamma_set)
+    __swig_setmethods__["_feedForwardMomentum"] = _htfe.LayerDesc__feedForwardMomentum_set
+    __swig_getmethods__["_feedForwardMomentum"] = _htfe.LayerDesc__feedForwardMomentum_get
+    if _newclass:_feedForwardMomentum = _swig_property(_htfe.LayerDesc__feedForwardMomentum_get, _htfe.LayerDesc__feedForwardMomentum_set)
+    __swig_setmethods__["_lateralMomentum"] = _htfe.LayerDesc__lateralMomentum_set
+    __swig_getmethods__["_lateralMomentum"] = _htfe.LayerDesc__lateralMomentum_get
+    if _newclass:_lateralMomentum = _swig_property(_htfe.LayerDesc__lateralMomentum_get, _htfe.LayerDesc__lateralMomentum_set)
+    __swig_setmethods__["_feedBackMomentum"] = _htfe.LayerDesc__feedBackMomentum_set
+    __swig_getmethods__["_feedBackMomentum"] = _htfe.LayerDesc__feedBackMomentum_get
+    if _newclass:_feedBackMomentum = _swig_property(_htfe.LayerDesc__feedBackMomentum_get, _htfe.LayerDesc__feedBackMomentum_set)
+    __swig_setmethods__["_hiddenBiasMomentum"] = _htfe.LayerDesc__hiddenBiasMomentum_set
+    __swig_getmethods__["_hiddenBiasMomentum"] = _htfe.LayerDesc__hiddenBiasMomentum_get
+    if _newclass:_hiddenBiasMomentum = _swig_property(_htfe.LayerDesc__hiddenBiasMomentum_get, _htfe.LayerDesc__hiddenBiasMomentum_set)
+    __swig_setmethods__["_reconstructionMomentum"] = _htfe.LayerDesc__reconstructionMomentum_set
+    __swig_getmethods__["_reconstructionMomentum"] = _htfe.LayerDesc__reconstructionMomentum_get
+    if _newclass:_reconstructionMomentum = _swig_property(_htfe.LayerDesc__reconstructionMomentum_get, _htfe.LayerDesc__reconstructionMomentum_set)
     __swig_setmethods__["_lateralScalar"] = _htfe.LayerDesc__lateralScalar_set
     __swig_getmethods__["_lateralScalar"] = _htfe.LayerDesc__lateralScalar_get
     if _newclass:_lateralScalar = _swig_property(_htfe.LayerDesc__lateralScalar_get, _htfe.LayerDesc__lateralScalar_set)
+    __swig_setmethods__["_feedBackScalar"] = _htfe.LayerDesc__feedBackScalar_set
+    __swig_getmethods__["_feedBackScalar"] = _htfe.LayerDesc__feedBackScalar_get
+    if _newclass:_feedBackScalar = _swig_property(_htfe.LayerDesc__feedBackScalar_get, _htfe.LayerDesc__feedBackScalar_set)
     __swig_setmethods__["_minDerivative"] = _htfe.LayerDesc__minDerivative_set
     __swig_getmethods__["_minDerivative"] = _htfe.LayerDesc__minDerivative_get
     if _newclass:_minDerivative = _swig_property(_htfe.LayerDesc__minDerivative_get, _htfe.LayerDesc__minDerivative_set)
+    __swig_setmethods__["_blurKernelWidth"] = _htfe.LayerDesc__blurKernelWidth_set
+    __swig_getmethods__["_blurKernelWidth"] = _htfe.LayerDesc__blurKernelWidth_get
+    if _newclass:_blurKernelWidth = _swig_property(_htfe.LayerDesc__blurKernelWidth_get, _htfe.LayerDesc__blurKernelWidth_set)
+    __swig_setmethods__["_numBlurPasses"] = _htfe.LayerDesc__numBlurPasses_set
+    __swig_getmethods__["_numBlurPasses"] = _htfe.LayerDesc__numBlurPasses_get
+    if _newclass:_numBlurPasses = _swig_property(_htfe.LayerDesc__numBlurPasses_get, _htfe.LayerDesc__numBlurPasses_set)
     def __init__(self): 
         this = _htfe.new_LayerDesc()
         try: self.this.append(this)
@@ -241,6 +262,12 @@ class Layer(_object):
     __swig_setmethods__["_hiddenStatesFeedBackPrevPrev"] = _htfe.Layer__hiddenStatesFeedBackPrevPrev_set
     __swig_getmethods__["_hiddenStatesFeedBackPrevPrev"] = _htfe.Layer__hiddenStatesFeedBackPrevPrev_get
     if _newclass:_hiddenStatesFeedBackPrevPrev = _swig_property(_htfe.Layer__hiddenStatesFeedBackPrevPrev_get, _htfe.Layer__hiddenStatesFeedBackPrevPrev_set)
+    __swig_setmethods__["_blurPing"] = _htfe.Layer__blurPing_set
+    __swig_getmethods__["_blurPing"] = _htfe.Layer__blurPing_get
+    if _newclass:_blurPing = _swig_property(_htfe.Layer__blurPing_get, _htfe.Layer__blurPing_set)
+    __swig_setmethods__["_blurPong"] = _htfe.Layer__blurPong_set
+    __swig_getmethods__["_blurPong"] = _htfe.Layer__blurPong_get
+    if _newclass:_blurPong = _swig_property(_htfe.Layer__blurPong_get, _htfe.Layer__blurPong_set)
     __swig_setmethods__["_feedForwardWeights"] = _htfe.Layer__feedForwardWeights_set
     __swig_getmethods__["_feedForwardWeights"] = _htfe.Layer__feedForwardWeights_get
     if _newclass:_feedForwardWeights = _swig_property(_htfe.Layer__feedForwardWeights_get, _htfe.Layer__feedForwardWeights_set)
@@ -305,6 +332,8 @@ class HTFE(_object):
     def getInputWidth(self): return _htfe.HTFE_getInputWidth(self)
     def getInputHeight(self): return _htfe.HTFE_getInputHeight(self)
     def getLayerDescs(self): return _htfe.HTFE_getLayerDescs(self)
+    def getLayers(self): return _htfe.HTFE_getLayers(self)
+    def getInputImage(self): return _htfe.HTFE_getInputImage(self)
     def setInput(self, *args): return _htfe.HTFE_setInput(self, *args)
     def getPrediction(self, *args): return _htfe.HTFE_getPrediction(self, *args)
     def clearMemory(self, *args): return _htfe.HTFE_clearMemory(self, *args)
