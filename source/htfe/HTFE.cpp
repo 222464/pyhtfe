@@ -22,7 +22,7 @@ struct Int2 {
 };
 
 void HTFE::createRandom(sys::ComputeSystem &cs, sys::ComputeProgram &program, int inputWidth, int inputHeight, const std::vector<LayerDesc> &layerDescs, float minInitWeight, float maxInitWeight) {
-	std::mt19937 generator(time(nullptr));
+	_generator.seed(time(nullptr));
 
 	std::uniform_int_distribution<int> seedDist(0, 99999);
 
@@ -116,8 +116,8 @@ void HTFE::createRandom(sys::ComputeSystem &cs, sys::ComputeProgram &program, in
 
 		// Initialize
 		Uint2 initSeedHiddenSpatial;
-		initSeedHiddenSpatial._x = seedDist(generator);
-		initSeedHiddenSpatial._y = seedDist(generator);
+		initSeedHiddenSpatial._x = seedDist(_generator);
+		initSeedHiddenSpatial._y = seedDist(_generator);
 
 		int index = 0;
 
@@ -134,8 +134,8 @@ void HTFE::createRandom(sys::ComputeSystem &cs, sys::ComputeProgram &program, in
 		cs.getQueue().enqueueNDRangeKernel(initializeLayerHiddenSpatialKernel, cl::NullRange, cl::NDRange(_layerDescs[l]._spatialWidth, _layerDescs[l]._spatialHeight));
 
 		Uint2 initSeedHiddenTemporal;
-		initSeedHiddenTemporal._x = seedDist(generator);
-		initSeedHiddenTemporal._y = seedDist(generator);
+		initSeedHiddenTemporal._x = seedDist(_generator);
+		initSeedHiddenTemporal._y = seedDist(_generator);
 
 		index = 0;
 
@@ -264,7 +264,7 @@ void HTFE::createRandom(sys::ComputeSystem &cs, sys::ComputeProgram &program, in
 	_gaussianBlurYKernel = cl::Kernel(program.getProgram(), "gaussianBlurY");
 }
 
-void HTFE::activate(sys::ComputeSystem &cs, std::mt19937 &generator) {
+void HTFE::activate(sys::ComputeSystem &cs) {
 	{
 		cl::size_t<3> origin;
 		origin[0] = 0;
@@ -335,8 +335,8 @@ void HTFE::activate(sys::ComputeSystem &cs, std::mt19937 &generator) {
 		// -------------------------------- Activate --------------------------------
 
 		Uint2 activateFeedForwardSeed;
-		activateFeedForwardSeed._x = seedDist(generator);
-		activateFeedForwardSeed._y = seedDist(generator);
+		activateFeedForwardSeed._x = seedDist(_generator);
+		activateFeedForwardSeed._y = seedDist(_generator);
 
 		int index = 0;
 
@@ -367,8 +367,8 @@ void HTFE::activate(sys::ComputeSystem &cs, std::mt19937 &generator) {
 
 		// Reconstruction
 		Uint2 seed;
-		seed._x = seedDist(generator);
-		seed._y = seedDist(generator);
+		seed._x = seedDist(_generator);
+		seed._y = seedDist(_generator);
 
 		index = 0;
 
@@ -496,8 +496,8 @@ void HTFE::activate(sys::ComputeSystem &cs, std::mt19937 &generator) {
 		// -------------------------------- Activate --------------------------------
 
 		Uint2 activateFeedBackSeed;
-		activateFeedBackSeed._x = seedDist(generator);
-		activateFeedBackSeed._y = seedDist(generator);
+		activateFeedBackSeed._x = seedDist(_generator);
+		activateFeedBackSeed._y = seedDist(_generator);
 
 		int index = 0;
 
@@ -557,8 +557,8 @@ void HTFE::activate(sys::ComputeSystem &cs, std::mt19937 &generator) {
 		// --------------------- Reconstructions ---------------------
 
 		Uint2 seed;
-		seed._x = seedDist(generator);
-		seed._y = seedDist(generator);
+		seed._x = seedDist(_generator);
+		seed._y = seedDist(_generator);
 
 		index = 0;
 
@@ -577,8 +577,8 @@ void HTFE::activate(sys::ComputeSystem &cs, std::mt19937 &generator) {
 
 		cs.getQueue().enqueueNDRangeKernel(_layerSpatialReconstructKernel, cl::NullRange, cl::NDRange(_layerDescs[l]._spatialWidth, _layerDescs[l]._spatialHeight));
 
-		seed._x = seedDist(generator);
-		seed._y = seedDist(generator);
+		seed._x = seedDist(_generator);
+		seed._y = seedDist(_generator);
 
 		index = 0;
 
@@ -594,8 +594,8 @@ void HTFE::activate(sys::ComputeSystem &cs, std::mt19937 &generator) {
 		index = 0;
 
 		if (l != _layers.size() - 1) {
-			seed._x = seedDist(generator);
-			seed._y = seedDist(generator);
+			seed._x = seedDist(_generator);
+			seed._y = seedDist(_generator);
 
 			_layerNextTemporalReconstructKernel.setArg(index++, _layers[l]._hiddenStatesTemporal);
 			_layerNextTemporalReconstructKernel.setArg(index++, _layers[l]._feedBackWeightsPrev);
@@ -614,8 +614,8 @@ void HTFE::activate(sys::ComputeSystem &cs, std::mt19937 &generator) {
 
 		// --------------------- Predictive Spatial Reconstruction ---------------------
 
-		seed._x = seedDist(generator);
-		seed._y = seedDist(generator);
+		seed._x = seedDist(_generator);
+		seed._y = seedDist(_generator);
 
 		index = 0;
 
@@ -633,8 +633,8 @@ void HTFE::activate(sys::ComputeSystem &cs, std::mt19937 &generator) {
 
 		// --------------------- Input Reconstruction ---------------------
 
-		seed._x = seedDist(generator);
-		seed._y = seedDist(generator);
+		seed._x = seedDist(_generator);
+		seed._y = seedDist(_generator);
 
 		index = 0;
 

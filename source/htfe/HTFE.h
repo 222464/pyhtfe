@@ -104,6 +104,8 @@ namespace htfe {
 
 	class HTFE {
 	private:
+		std::mt19937 _generator;
+	
 		int _inputWidth, _inputHeight;
 
 		std::vector<LayerDesc> _layerDescs;
@@ -137,7 +139,7 @@ namespace htfe {
 	public:
 		void createRandom(sys::ComputeSystem &cs, sys::ComputeProgram &program, int inputWidth, int inputHeight, const std::vector<LayerDesc> &layerDescs, float minInitWeight, float maxInitWeight);
 
-		void activate(sys::ComputeSystem &cs, std::mt19937 &generator);
+		void activate(sys::ComputeSystem &cs);
 		void learn(sys::ComputeSystem &cs);
 		void stepEnd();
 
